@@ -100,8 +100,8 @@ typedef struct passinfo
 		0, 0, 0}
 
 /**
- * struct builtin - contains builtin string and related function
- * @type:  builtin command flag
+ * struct builtin - Has builtin string and it is related to function
+ * @type:  builtin flag.
  * @func: function
  */
 typedef struct builtin
@@ -111,10 +111,10 @@ typedef struct builtin
 } builtin_table;
 
 /* toem_errors.c */
-void _eputs(char *);
-int _eputchar(char);
-int _putfd(char c, int fd);
-int _putsfd(char *str, int fd);
+void _eput(char *);
+int eputchar(char);
+int _putfd(char y, int fd);
+int _putffd(char *str, int fd);
 
 /* toem_string.c */
 int _strlen(char *);
@@ -132,8 +132,8 @@ void *_realloc(void *, unsigned int, unsigned int);
 int bfree(void **);
 
 /* toem_builtin1.c */
-int _myhistory(info_t *);
-int _myalias(info_t *);
+int _mehistory(info_t *);
+int _mealias(info_t *);
 
 /*toem_getline.c */
 ssize_t get_input(info_t *);
@@ -176,28 +176,28 @@ char **strtow2(char *, char);
 int bfree(void **);
 
 /* toem_atoi.c */
-int interactive(info_t *);
-int is_delim(char, char *);
-int _isalpha(int);
-int _atoi(char *);
+int interactive_mode(info_t *);
+int its_delim(char, char *);
+int _alpha(int);
+int _atoic(char *);
 
 /* toem_builtin.c */
-int _myexit(info_t *);
-int _mycd(info_t *);
-int _myhelp(info_t *);
+int _the_exit(info_t *);
+int _mycurrentdirectory(info_t *);
+int _help(info_t *);
 
 /* toem_builtin1.c */
-int _myhistory(info_t *);
-int _myalias(info_t *);
+int _mehistory(info_t *);
+int _mealias(info_t *);
 
 /* toem_getinfo.c */
 void clear_info(info_t *);
 void set_info(info_t *, char **);
 void free_info(info_t *, int);
 
-/* toem_environ.c */
-char *_getenv(info_t *, const char *);
-int _myenv(info_t *);
+/* toem_environment.c */
+char *_getenviron(info_t *, const char *);
+int _myenviron(info_t *);
 
 /* toem_getenv.c */
 char **get_environ(info_t *);

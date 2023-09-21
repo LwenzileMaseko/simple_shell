@@ -1,13 +1,13 @@
 #include "shell.h"
 
  /**
- * _putsfd - print input string
+ * _putffd - print input string
  * @str:  string to print
  * @fd: filedescriptor to write to
  *
  * Return: number of chars put
  */
-int _putsfd(char *str, int fd)
+int _putffd(char *str, int fd)
 {
 	int k = 0;
 
@@ -15,63 +15,63 @@ int _putsfd(char *str, int fd)
 		return (0);
 	while (*str)
 	{
-		k += _putfd(*str++, fd);
+		k += _putffd(*str++, fd);
 	}
 	return (k);
 }
 
 /**
- * _eputchar - writes character c to a stderr
- * @c: character to be printed
+ * eputchar - writes character c to a stderr
+ * @y: character to be printed
  *
  * Return:1 on success
  * On error, -1 will returned, and errno is set appropriately.
  */
-int _eputchar(char c)
+int eputchar(char y)
 {
 	static int k;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || k >= WRITE_BUF_SIZE)
+	if (y == BUF_FLUSH || k >= WRITE_BUF_SIZE)
 	{
 		write(2, buf, k);
 		k = 0;
 	}
-	if (c != BUF_FLUSH)
-		buf[k++] = c;
+	if (y != BUF_FLUSH)
+		buf[k++] = y;
 	return (1);
 }
 
 /**
  * _putfd - writes character c to given fd
- * @c:  character to be printed
+ * @y:  character to be printed
  * @fd: filedescriptor to write to
  *
  * Return:1 On success
  * On error, -1 will be returned, and errno is set appropriately.
  */
-int _putfd(char c, int fd)
+int _putfd(char y, int fd)
 {
 	static int k;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || k >= WRITE_BUF_SIZE)
+	if (y == BUF_FLUSH || k >= WRITE_BUF_SIZE)
 	{
 		write(fd, buf, k);
 		k = 0;
 	}
-	if (c != BUF_FLUSH)
-		buf[k++] = c;
+	if (y != BUF_FLUSH)
+		buf[k++] = y;
 	return (1);
 }
 
 /**
- * _eputs - print the input string
+ * _eput - print the input string
  * @str: string to print
  *
  * Return: Nothing
  */
-void _eputs(char *str)
+void _eput(char *str)
 {
 	int k = 0;
 
@@ -79,7 +79,7 @@ void _eputs(char *str)
 		return;
 	while (str[k] != '\0')
 	{
-		_eputchar(str[k]);
+		eputchar(str[k]);
 		k++;
 	}
 }
