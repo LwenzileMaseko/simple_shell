@@ -1,34 +1,70 @@
 #include "shell.h"
 
 /**
- * remove_comments - replaces  the ever first instance of '#' with '\0'
- * @buf: address of string to be modified
- *
- * Return: Always 0;
+ * print_error -it prints error messages.
+ * @info: parameter and return info struct
+ * @estr: string with specified error type
+ * Return: if no numbers in string 0, converted number otherwise
+ *        -1 on error
  */
-void remove_comments(char *buf)
+void print_error(info_t *info, char *estr)
 {
-	int y;
-
-	for (y = 0; buf[y] != '\0'; y++)
-		if (buf[y] == '#' && (!y || buf[y - 1] == ' '))
-		{
-			buf[y] = '\0';
-			break;
-		}
+	_puts(info->fname);
+	_puts(": ");
+	print_d(info->line_count, STDERR_FILENO);
+	_puts(": ");
+	_puts(info->argv[0]);
+	_puts(": ");
+	_puts(estr);
 }
 
 /**
- * print_d -prints decimal(integer) number (base 10)
- * @input:  input
- * @fd:  filedescriptor to write to
+ * convert_number - function that converts
+ * @num: number.
+ * @base: Base.
+ * @flags: Argument flags
  *
- * Return: number of characters to be printed
+ * Return: String
+ */
+char *convert_number(long int number, int base, int flags)
+{
+	static char *array;
+	static char buffer[50];
+	char sign = 0;
+	char *ptr;
+	unsigned long num = number;
+
+	if (!(flags & CONVERT_UNSIGNED) && number < 0)
+	{
+		num = -number;
+		sign = '-';
+
+	}
+	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
+	ptr = &buffer[49];
+	*ptr = '\0';
+
+	do	{
+		*--ptr = array[num % base];
+		num /= base;
+	} while (num != 0);
+
+	if (sign)
+		*--ptr = sign;
+	return (ptr);
+}
+
+/**
+ * print_d -  prints  decimal (integer) number with (base 10)
+ * @input: input
+ * @fd: filedescriptor to be written to
+ *
+ * Return: number of characters to print
  */
 int print_d(int input, int fd)
 {
 	int (*__putchar)(char) = _putchar;
-	int y, count = 0;
+	int y, c = 0;
 	unsigned int _abs_, current;
 
 	if (fd == STDERR_FILENO)
@@ -37,7 +73,7 @@ int print_d(int input, int fd)
 	{
 		_abs_ = -input;
 		__putchar('-');
-		count++;
+		c++;
 	}
 	else
 		_abs_ = input;
@@ -47,74 +83,20 @@ int print_d(int input, int fd)
 		if (_abs_ / y)
 		{
 			__putchar('0' + current / y);
-			count++;
+			c++;
 		}
 		current %= y;
 	}
 	__putchar('0' + current);
-	count++;
+	c++;
 
-	return (count);
+	return (c);
 }
 
 /**
- * print_error - prints error message
- * @info: parameter and return of struct
- * @estr: string with specified rror type
- * Return: 0 if no number are string, converted number otherwise
- *        -1 on error
- */
-void print_error(info_t *info, char *estr)
-{
-	_eputs(info->fname);
-	_eputs(": ");
-	print_d(info->line_count, STDERR_FILENO);
-	_eputs(": ");
-	_eputs(info->argv[0]);
-	_eputs(": ");
-	_eputs(estr);
-}
-
-/**
- * convert_number - converter function that converts a clone of itao
- * @num: number
- * @base: base
- * @flags:flags
- *
- * Return: string
- */
-char *convert_number(long int num, int base, int flags)
-{
-	static char *array;
-	static char buffer[50];
-	char sign = 0;
-	char *ptr;
-	unsigned long n = num;
-
-	if (!(flags & CONVERT_UNSIGNED) && num < 0)
-	{
-		n = -num;
-		sign = '-';
-
-	}
-	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-	ptr = &buffer[49];
-	*ptr = '\0';
-
-	do	{
-		*--ptr = array[n % base];
-		n /= base;
-	} while (n != 0);
-
-	if (sign)
-		*--ptr = sign;
-	return (ptr);
-}
-
-/**
- * _erratoi - converts a string to an integer
- * @s: the string to be converted
- * Return: 0 if no numbers in string, converted number otherwise
+ * _erratoi - changes string to integer
+ * @s: string to convert
+ * Return: if there are no numbers in string 0, converted number otherwise
  *       -1 on error
  */
 int _erratoi(char *s)
@@ -123,7 +105,7 @@ int _erratoi(char *s)
 	unsigned long int result = 0;
 
 	if (*s == '+')
-		s++;
+		s++;  /* TODO: why does this main return 255? */
 	for (y = 0;  s[y] != '\0'; y++)
 	{
 		if (s[y] >= '0' && s[y] <= '9')
@@ -137,5 +119,23 @@ int _erratoi(char *s)
 			return (-1);
 	}
 	return (result);
+}
+
+/**
+ * rm_comments -It replaces first instance of '#' with '\0'
+ * @buf: address of string to be modified.
+ *
+ * Return:0 Always;
+ */
+void remove_comments(char *buf)
+{
+	int y;
+
+	for (y = 0; buf[y] != '\0'; y++)
+		if (buf[y] == '#' && (!y || buf[y - 1] == ' '))
+		{
+			buf[y] = '\0';
+			break;
+		}
 }
 

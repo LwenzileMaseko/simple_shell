@@ -112,9 +112,9 @@ typedef struct builtin
 
 /* toem_errors.c */
 void _eput(char *);
-int eputchar(char);
+int _eputchar(char);
 int _putfd(char y, int fd);
-int _putffd(char *str, int fd);
+int _putsfd(char *str, int fd);
 
 /* toem_string.c */
 int _strlen(char *);

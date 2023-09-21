@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- **_strncat - concatenates two strings.
+ **_strncat - joins two strings.
  *@dest: first string
  *@src: second string
  *@n: amount of bytes that will be maximally used
@@ -9,20 +9,20 @@
  */
 char *_strncat(char *dest, char *src, int n)
 {
-	int w, j;
+	int w, y;
 	char *s = dest;
 
 	w = 0;
-	j = 0;
+	y = 0;
 	while (dest[w] != '\0')
 		w++;
-	while (src[j] != '\0' && j < n)
+	while (src[y] != '\0' && y < n)
 	{
-		dest[w] = src[j];
+		dest[w] = src[y];
 		w++;
-		j++;
+		y++;
 	}
-	if (j < n)
+	if (y < n)
 		dest[w] = '\0';
 	return (s);
 }
@@ -30,13 +30,13 @@ char *_strncat(char *dest, char *src, int n)
 /**
  **_strchr - shows a character in a string
  *@s: string that will be parsed
- *@c: character to look for
+ *@car: character to look for
  *Return: (s) pointer to memory area
  */
-char *_strchr(char *s, char c)
+char *_strchr(char *s, char car)
 {
 	do {
-		if (*s == c)
+		if (*s == car)
 			return (s);
 	} while (*s++ != '\0');
 
@@ -47,27 +47,27 @@ char *_strchr(char *s, char c)
  **_strncpy - duplicates a string
  *@dest: destination the string to be copied to
  *@src: source string
- *@n:  amount of characters that will be copied
+ *@num:  amount of characters that will be copied
  *Return:  concatenated string
  */
-char *_strncpy(char *dest, char *src, int n)
+char *_strncpy(char *dest, char *src, int num)
 {
-	int w, j;
+	int w, y;
 	char *s = dest;
 
 	w = 0;
-	while (src[w] != '\0' && w < n - 1)
+	while (src[w] != '\0' && w < num - 1)
 	{
 		dest[w] = src[w];
 		w++;
 	}
-	if (w < n)
+	if (w < num)
 	{
-		j = w;
-		while (j < n)
+		y = w;
+		while (y < num)
 		{
-			dest[j] = '\0';
-			j++;
+			dest[y] = '\0';
+			y++;
 		}
 	}
 	return (s);
