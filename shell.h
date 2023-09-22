@@ -182,9 +182,9 @@ int _alpha(int);
 int _atoic(char *);
 
 /* toem_builtin.c */
-int _the_exit(info_t *);
-int _mycurrentdirectory(info_t *);
-int _help(info_t *);
+int _myexit(info_t *);
+int _mycd(info_t *);
+int _myhelp(info_t *);
 
 /* toem_builtin1.c */
 int _mehistory(info_t *);

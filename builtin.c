@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * _mycurrentdirectory - converts current directory of process
- * @info: Structure with potential arguments.Maintain
- * constant functions prototype.
- * Return: Always 0
+ * _mycd - converts current directory of  process
+ * @info: Structure with potential arguments. Maintains
+ * constant function prototype.
+ * Return: 0 Always
  */
-int _mycurrentdirectory(info_t *info)
+int _mycd(info_t *info)
 {
 	char *s, *dir, buffer[1024];
 	int chdir_ret;
@@ -16,7 +16,7 @@ int _mycurrentdirectory(info_t *info)
 		_puts("TODO: >>getcwd failure emsg here<<\n");
 	if (!info->argv[1])
 	{
-		dir = _setenv(info, "HOME=");
+		dir = _getenv(info, "HOME=");
 		if (!dir)
 			chdir_ret = /* TODO: what should this be? */
 				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
@@ -51,13 +51,30 @@ int _mycurrentdirectory(info_t *info)
 }
 
 /**
- * _the_exit - gets out of the shell
- * @info: Structure that contains potential arguments. Maintains
- * constant functions prototype.
- * Return: gets out with a given exit status
+ * _myhelp - converts current directory of  process
+ * @info: Structure containing potential arguments. Maintain
+ * constant function prototype.
+ * Return: Always 0
+ */
+int _myhelp(info_t *info)
+{
+	char **arg_array;
+
+	arg_array = info->argv;
+	_puts("help call works. Function not yet implemented \n");
+	if (0)
+		_puts(*arg_array); /* temp att_unused workaround */
+	return (0);
+}
+
+/**
+ * _myexit - closes the shell
+ * @info: Structure with potential arguments.Maintain
+ * constant function prototype.
+ * Return: exits with  exit status that is given
  * (0) if info.argv[0] != "exit"
  */
-int _the_exit(info_t *info)
+int _myexit(info_t *info)
 {
 	int exitcheck;
 
@@ -79,20 +96,4 @@ int _the_exit(info_t *info)
 	return (-2);
 }
 
-/**
- * _help - converts current directory of process
- * @info: Structure with potential arguments.Maintain
- * constant functions prototype.
- * Return: Always 0
- */
-int _help(info_t *info)
-{
-	char **arg_array;
-
-	arg_array = info->argv;
-	_puts("help call works. Function not yet implemented \n");
-	if (0)
-		_puts(*arg_array); /* temp att_unused workaround */
-	return (0);
-}
 
